@@ -68,7 +68,7 @@ Filter comes with list of often used plugins, so you can use them out from box (
 
 | NAME  | DESCRIPTION | OPTIONS (with default values) |
 | ----- | ----------- | --------- |
-| AutoLoad  | Apply new filter state without pressing submit (just change input value and new filter state will be applied) | `debounce`: 350 - debounce time of input change before request |
+| AutoLoad  | Apply new filter state without pressing submit (just change input value and new filter state will be applied) | `debounce`: 350 - debounce time of input change before request <br/> `events`: 'change input' - plugin will listen to this events and reload items after |
 | InfinityScroll | Load new items while scrolling | `perPage`: 7 - size of bunch to load <br/> `total`: override native pagination total <br/> `scrollOffset`: 200 - scroll offset to bottom edge when request new page should be initialized |
 | LoadMore | Load more button on the bottom of list to load new items to the list | `perPage`: 7 - size of bunch to load <br/> `total`: override native pagination total <br/> loadMoreSelector`: '[data-role="search-load-more"]' - selector to load more control (like a button) <br/> `loadMoreEvent`: 'click' - lib will be watching to this event and when it will be triggered on load more control new page request will be initialzed |
 | Masonry | Integration with Masonry plugin | `masonry`: {itemSelector: '.grid-item'} - this options will be passed direct to masonry plugin |
