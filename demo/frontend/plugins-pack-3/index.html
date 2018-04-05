@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>just-filter</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.css" />
+  </head>
+  <body>
+    <style>
+        body {
+            padding: 10px;
+        }
+        .navigation {
+            padding: 5px 0;
+        }
+        main {
+            margin-top: 10px;
+        }
+        .image img {
+            width: 100%;
+            height: auto;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" class="navigation">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><b>Plugins:</b></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">Custom load more</li>
+                                                <li class="list-group-item">WOW.js <a href="http://mynameismatthieu.com/WOW/">link</a></li>
+                                                <li class="list-group-item">Packery <a href="https://packery.metafizzy.co/">link</a></li>
+                                                <li class="list-group-item">Custom auto submit on change</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><b>Filters:</b></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <select name="color" class="form-control" data-role="search-filter" multiple="multiple">
+                                                        <option value="">Color ...</option>
+                                                        <option value="red">Red</option>
+                                                        <option value="white">White</option>
+                                                        <option value="black">Black</option>
+                                                        <option value="blue">Blue</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <select name="gender" class="form-control" data-role="search-filter">
+                                                        <option value="">Gender ...</option>
+                                                        <option value="women">Woman</option>
+                                                        <option value="men">Men</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input name="size" placeholder="Size ..." type="number" class="form-control touch-spin" data-role="search-filter"/>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <textarea name="title" placeholder="Title ..." class="form-control" data-role="search-filter"></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><b>Sorting:</b></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <select name="color" class="form-control" data-role="search-sort">
+                                                        <option value="">Sorting ...</option>
+                                                        <option value="color:asc">Palette up </option>
+                                                        <option value="color:desc">Palette down </option>
+                                                        <option data-sort-dir-input='[data-role="search-sort-dir"]' value="size">Size</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <select name="color" class="form-control" data-role="search-sort-dir" style="display: none;">
+                                                        <option value="asc">ASC</option>
+                                                        <option value="desc">DESC</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row" data-role="search-list">
+                      <jc-filter-list>
+                        Loading ...
+                      </jc-filter-list>
+                    </div>
+                    <div class="row">
+                      <div class="col-sm-12">
+                        <button type="button" class="btn-block btn btn-primary" data-role="search-load-more">
+                          Load More
+                        </button>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.js"></script>
+    <script src="/dist/build.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.imagesloaded/4.1.4/imagesloaded.pkgd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/packery/2.1.1/packery.pkgd.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

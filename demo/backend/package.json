@@ -1,0 +1,13 @@
+{
+  "name": "just-filter-backend-example",
+  "version": "1.0.0",
+  "description": "Example of be realization for just-filter",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.4",
+    "express": "^4.16.2"
+  }
+}

@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>just-filter</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/3.1.2/jquery.bootstrap-touchspin.min.css" />
+    <link href="https://cdn.jsdelivr.net/npm/select-picker@0.3.1/dist/picker.css" rel="stylesheet" />
+  </head>
+  <body>
+    <style>
+        body {
+            padding: 10px;
+        }
+        .navigation {
+            padding: 5px 0;
+        }
+        main {
+            margin-top: 10px;
+        }
+        input.hidden:checked + label.btn {
+          background-color: aliceblue;
+        }
+        button[data-role="search-load-more"]:disabled {
+          display: none;
+        }
+    </style>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <form action="" class="navigation">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><b>Plugins:</b></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <ul class="list-group">
+                                                <li class="list-group-item">WP Rest-Api (because of CORS you need to use chrome extension like <a href="https://chrome.google.com/webstore/detail/allow-control-allow-origi/nlfbmbojpeacfghkpbjhddihlkkiljbi">Allow-Control-Allow-Origin: *</a>) <a href="http://v2.wp-api.org/">link</a></li>
+                                                <li class="list-group-item">Custom Multiselect Filter</li>
+                                                <li class="list-group-item">Custom Posts Separator (Featured Posts)</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><b>Filters:</b></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <input type="checkbox" name="categories" id="filter-category-1" class="hidden" autocomplete="off" value="1" data-role="search-filter">
+                                                    <label class="btn btn-default btn-block" for="filter-category-1">
+                                                        <h5>Uncategorized</h5>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="checkbox" name="categories" id="filter-category-2" class="hidden" autocomplete="off" value="2" data-role="search-filter">
+                                                    <label class="btn btn-default btn-block" for="filter-category-2">
+                                                        <h5>Aut architecto nihil</h5>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <input type="checkbox" name="categories" id="filter-category-11" class="hidden" autocomplete="off" value="11" data-role="search-filter">
+                                                    <label class="btn btn-default btn-block" for="filter-category-11">
+                                                        <h5>Facilis dignissimos</h5>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-3">
+                                                  <input type="checkbox" name="categories" id="filter-category-99" class="hidden" autocomplete="off" value="99" data-role="search-filter">
+                                                  <label class="btn btn-default btn-block" for="filter-category-99">
+                                                    <h5>No posts category</h5>
+                                                  </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="panel panel-default">
+                                        <div class="panel-heading">
+                                            <h3 class="panel-title"><b>Sorting:</b></h3>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-3">
+                                                    <select name="color" class="form-control" data-role="search-sort">
+                                                        <option value="">Sorting ...</option>
+                                                        <option value="id:asc">Oldest id</option>
+                                                        <option value="id:desc">Newest id</option>
+                                                        <option data-sort-dir-input='[data-role="search-sort-dir"]' value="date">Date</option>
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-md-3">
+                                                    <select name="color" class="form-control" data-role="search-sort-dir" style="display: none;">
+                                                        <option value="asc">ASC</option>
+                                                        <option value="desc">DESC</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: none" id="featured-posts">
+      <div class="col-md-12">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h3 class="panel-title">FEATURED 1</h3></div>
+              <div class="panel-body">
+                <div class="description">
+                  <b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur consequuntur debitis deleniti, facere, id incidunt ipsa ipsum itaque minima nam nemo nisi porro quisquam soluta temporibus tenetur veritatis voluptatibus.</b>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading"><h3 class="panel-title">FEATURED 2</h3></div>
+              <div class="panel-body">
+                <div class="description">
+                  <b>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquid aspernatur consequuntur debitis deleniti, facere, id incidunt ipsa ipsum itaque minima nam nemo nisi porro quisquam soluta temporibus tenetur veritatis voluptatibus.</b>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <main>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="row" data-role="search-list">
+                      <jc-filter-list>
+                        Loading ...
+                      </jc-filter-list>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <button type="button" class="btn-block btn btn-primary" data-role="search-load-more">Load More</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.10/vue.js"></script>
+    <script src="/dist/build.js"></script>
+    <script
+            src="https://code.jquery.com/jquery-2.2.4.min.js"
+            integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-touchspin/3.1.2/jquery.bootstrap-touchspin.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select-picker@0.3.1/dist/picker.min.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>
