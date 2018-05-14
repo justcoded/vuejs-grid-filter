@@ -11,7 +11,7 @@ You can get more info about it just checking the examples in `demo/frontend` fol
 While this module is private you can install it only from this private repo (please note that you should have access to this repo, and you need add SSH key to Bitbucket before [instruction](https://confluence.atlassian.com/bitbucket/set-up-an-ssh-key-728138079.html)):
 
 ```sh
-npm install https://github.com/justcoded/vuejs-grid-filter.git --save
+npm i just-grid-filter
 ```
 
 ## Usage
