@@ -10,15 +10,15 @@ jQuery(function ($) {
     }
     function initSortingUI() {
       var sortingInput = $('[data-role="search-sort"]');
-      var sortingDirInput = $('[data-role="search-sort-dir"]');
+      var sortingDirInputWrapper = $('[data-role="search-sort-dir-wrapper"]');
 
       sortingInput.on('change', function () {
         var input = $(this);
 
-        if (input.find('option:selected').data('sortDirInput')) {
-          sortingDirInput.show();
+        if (input.data('sortDirInput')) {
+          sortingDirInputWrapper.show();
         } else {
-          sortingDirInput.hide();
+          sortingDirInputWrapper.hide();
         }
       });
     }

@@ -174,12 +174,18 @@ JustFilter.defaults = {
 
     const sortState = this.elements.sort.reduce((controlsState, el) => {
       const input = this.jquery(el);
+      if (input.is(':radio') && !input.is(':checked')) {
+        return controlsState;
+      }
+
       const name = input.val().split(':')[0];
       let sortDir = input.val().split(':')[1];
 
       if (!sortDir) {
-        const selectedOption = input.find('option:selected');
-        sortDir = this.jquery(selectedOption.data('sortDirInput')).val();
+        const selectedOption = input.is(':radio') ? input : input.find('option:selected');
+        const sortDirEl = this.jquery(selectedOption.data('sortDirInput'));
+
+        sortDir = sortDirEl.is(':radio') ? sortDirEl.filter(':checked').val() : sortDirEl.val();
       }
 
       if (name && sortDir) {
@@ -312,9 +318,16 @@ JustFilter.defaults = {
   },
   applyControlValue: function (input, value) {
     const isCheckbox = this.jquery(input).is('input[type="checkbox"]');
+    const isRadio = this.jquery(input).is('input[type="radio"]');
 
     if (isCheckbox) {
       value = Array.isArray(value) ? value : [value];
+    }
+
+    if (isRadio && input.val() === value) {
+      input.prop('checked', true).trigger('change');
+
+      return;
     }
 
     this.jquery(input).val(value).trigger('change').find('option:selected').attr('selected', '');
@@ -337,6 +350,7 @@ JustFilter.defaults = {
       }
     };
 
+    // TODO it's better to move sorting and pagination out to plugins
     const drawSortState = () => {
       const state = controlsState.sort;
 
@@ -346,7 +360,9 @@ JustFilter.defaults = {
         this.elements.sort.forEach((el) => {
           const input = $(el);
 
-          input.find('option').toArray().some((el) => {
+          const options = input.is(':radio') ? [input] : input.find('option').toArray();
+
+          options.some((el) => {
             const option = $(el);
             const optionSortName = option.val().split(':')[0];
             let optionSortDir = option.val().split(':')[1];
@@ -355,7 +371,9 @@ JustFilter.defaults = {
             if (!optionSortDir) {
               optionSortDirInput = this.jquery(option.data('sortDirInput'));
 
-              optionSortDir = optionSortDirInput.find('option').toArray().map((el) => this.jquery(el).val())
+              optionSortDir = optionSortDirInput.is(':radio')
+                  ? optionSortDirInput.toArray().map((el) => this.jquery(el).val())
+                  : optionSortDirInput.find('option').toArray().map((el) => this.jquery(el).val())
             } else {
               optionSortDir = [optionSortDir];
             }
@@ -364,7 +382,11 @@ JustFilter.defaults = {
               this.applyControlValue(input, option.val());
 
               if (optionSortDirInput) {
-                this.applyControlValue(optionSortDirInput, sortDir);
+                if (optionSortDirInput.length > 1) {
+                  optionSortDirInput = optionSortDirInput.filter(`[value="${sortDir}"]`)[0]
+                }
+
+                this.applyControlValue(this.jquery(optionSortDirInput), sortDir);
               }
 
               return true;

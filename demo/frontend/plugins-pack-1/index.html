@@ -87,19 +87,26 @@
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-md-3">
-                                                    <select name="color" class="form-control" data-role="search-sort">
-                                                        <option value="">Sorting ...</option>
-                                                        <option value="color:asc">Palette up </option>
-                                                        <option value="color:desc">Palette down </option>
-                                                        <option data-sort-dir-input='[data-role="search-sort-dir"]' value="size">Size</option>
-                                                    </select>
+                                                    <div>
+                                                      <div class="radio">
+                                                        <label><input name="sorting" checked type="radio" value="color:asc" data-role="search-sort"/>Pallete up</label>
+                                                      </div>
+                                                      <div class="radio">
+                                                        <label><input name="sorting" type="radio" value="color:desc" data-role="search-sort"/>Pallete down</label>
+                                                      </div>
+                                                      <div class="radio">
+                                                        <label><input name="sorting" type="radio" data-sort-dir-input='[data-role="search-sort-dir"]' value="size" data-role="search-sort"/>Size</label>
+                                                      </div>
+                                                    </div>
                                                 </div>
 
-                                                <div class="col-md-3">
-                                                    <select name="color" class="form-control" data-role="search-sort-dir" style="display: none;">
-                                                        <option value="asc">ASC</option>
-                                                        <option value="desc">DESC</option>
-                                                    </select>
+                                                <div class="col-md-3" data-role="search-sort-dir-wrapper" style="display: none;">
+                                                  <div class="radio">
+                                                    <label><input name="sort-order" checked type="radio" value="asc" data-role="search-sort-dir"/>ASC</label>
+                                                  </div>
+                                                  <div class="radio">
+                                                    <label><input name="sort-order" type="radio" value="desc" data-role="search-sort-dir"/>DESC</label>
+                                                  </div>
                                                 </div>
                                             </div>
                                         </div>
