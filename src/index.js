@@ -261,7 +261,10 @@ JustFilter.defaults = {
       return data;
     };
 
-    const query = queryString.parse(location.search.replace(/^\?/, ''));
+    return this.deserializeUrlToState(queryString, normalizeValues);
+  },
+  deserializeUrlToState: function (queryLib, normalizeValues) {
+    const query = queryLib.parse(location.search.replace(/^\?/, ''));
 
     return {
       filter: normalizeValues(query.filter) || {},
@@ -308,13 +311,14 @@ JustFilter.defaults = {
     }
 
     if (window.history.replaceState) {
-      const search = queryString.stringify(normalizedState);
-
-      const url = location.protocol + '//' + location.host + location.pathname
-        + (search ? ('?' + search) : '');
-      
-      window.history.replaceState(normalizedState, '', url);
+      window.history.replaceState(normalizedState, '', this.serializeStateToUrl(normalizedState, queryString));
     }
+  },
+  serializeStateToUrl: function (state, queryLib) {
+    const search = queryLib.stringify(state);
+
+    return location.protocol + '//' + location.host + location.pathname
+      + (search ? ('?' + search) : '');
   },
   applyControlValue: function (input, value) {
     const isCheckbox = this.jquery(input).is('input[type="checkbox"]');
