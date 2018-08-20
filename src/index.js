@@ -104,6 +104,17 @@ class JustFilter {
 
     return this;
   }
+
+  getState() {
+    return this._lib.lastRequestedState;
+  }
+
+  setState(state) {
+    return this._lib.setState({
+      ...this.getState(),
+      ...state,
+    });
+  }
 }
 
 JustFilter.defaults = {
@@ -112,8 +123,6 @@ JustFilter.defaults = {
     sort: '[data-role="search-sort"]',
     listUnProcessed: 'jc-filter-list',
     list: '[data-role="search-result"]',
-    page: '[data-role="search-page"]',
-    perPage: '[data-role="search-per-page"]',
     submit: '[data-role="search-submit"]'
   },
   jquery: null,
@@ -195,15 +204,10 @@ JustFilter.defaults = {
       return controlsState;
     }, {});
 
-    const paginationState = {
-      page: parseInt(this.jquery(this.elements.page[0]).val()),
-      perPage: parseInt(this.jquery(this.elements.perPage[0]).val())
-    };
-
     return {
       filter: filterState,
       sort: sortState,
-      pagination: paginationState
+      pagination: {},
     }
   },
   registerItemsUpdater: function (update) {
@@ -402,22 +406,12 @@ JustFilter.defaults = {
       }
     };
 
-    const drawPaginationState = () => {
-      const pagination = controlsState.pagination;
-
-      this.elements.page.forEach((el) => this.jquery(el).val(pagination.page));
-      this.elements.perPage.forEach((el) => this.jquery(el).val(pagination.perPage));
-    };
-
     drawFilterState();
     drawSortState();
-    drawPaginationState();
   },
   getControlInputs: function () {
     return this.elements.filter
       .concat(this.elements.sort)
-      .concat(this.elements.page)
-      .concat(this.elements.perPage)
       .concat(
         this.jquery(this.elements.sort).find('option').toArray().reduce((sortDirInputs, sortOption) => {
           const sortDirInput = this.jquery(sortOption.dataset.sortDirInput)[0];
@@ -436,7 +430,7 @@ JustFilter.defaults = {
   beforeInitCb: function () {
     // NOP
   },
-  afterServerResponseCb: function (data) {
+  afterServerResponseCb: function (data, state) {
     // NOP
   },
   afterItemsDrawCb: function (items) {

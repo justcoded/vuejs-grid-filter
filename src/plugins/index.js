@@ -7,3 +7,4 @@ export {default as SelectPicker} from './SelectPicker';
 export {default as InfinityScroll} from './InfinityScroll';
 export {default as WpRest} from './WpRest';
 export {default as Separator} from './Separator';
+export {default as SelectPagination} from './SelectPagination';

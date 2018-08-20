@@ -64,6 +64,8 @@ jQuery(function ($) {
       }
     });
 
+    filter.use(JustFilter.Plugins.SelectPagination());
+
     filter.init();
 
     var vm = new Vue({

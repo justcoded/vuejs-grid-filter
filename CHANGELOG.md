@@ -4,6 +4,9 @@ Change Log
 Develop
 ----------
 
+* GitHub Issue #4: provide for custom pagination templates @ob
+* GitHub Issue #3: add option for custom serialize/deserialize of url @ob
+
 v1.0.0 [rc]
 ----------
 

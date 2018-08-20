@@ -15,7 +15,7 @@ export default (params = {}) => {
 
   const setLoadMoreButtonAvailability = (status, jquery) => {
     jquery(options.loadMoreSelector).prop('disabled', !status);
-  }
+  };
 
   return {
     loadControlsState: function () {

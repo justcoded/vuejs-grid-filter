@@ -65,6 +65,7 @@ jQuery(function ($) {
         columnWidth: 100
       }
     }));
+    filter.use(JustFilter.Plugins.SelectPagination());
 
     filter.init();
 

@@ -1,6 +1,6 @@
 let currentRequestId = 1;
 
-export const loadData = (url, state, options, cb) => {
+export const loadData = (url, appData, state, options, cb) => {
   const requestId = ++currentRequestId;
 
   // TODO reject previous request because of new is applied
@@ -9,9 +9,9 @@ export const loadData = (url, state, options, cb) => {
       return; // no need to call callback because of new request was applied, TODO this will make a problems if transport will be used not only for endpoint list request
     }
 
-    const normalizedData = options.parseResponse(data, status, xhr, state);
+    const normalizedData = options.parseResponse(data, status, xhr, appData);
 
-    options.afterServerResponseCb(normalizedData);
+    options.afterServerResponseCb(normalizedData, state);
 
     cb(normalizedData.items);
   });

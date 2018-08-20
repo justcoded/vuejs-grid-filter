@@ -77,6 +77,7 @@ Filter comes with list of often used plugins, so you can use them out from box (
 | Wow | Integration with WOW plugin | `wow`: {} - this options will be passed direct to WOW plugin <br/> `lib`: typeof WOW !== 'undefined' ? WOW : null - instance of lib to work with  |
 | WpRest | Integration with WP REST api | `totalHeader`: 'X-WP-Total' - header name of total items from WP response  <br/> `embed`: true - add embedded subitems (categories, image links, etc)|
 | Separator | Add custom separator after some amount of posts (Featured posts can be implemented whith this plugin) | `after`: 6 - show separator after such amount of posts (if there are less posts, it will be shown after available amount of posts) <br/> `showIfNoPostsFound`: true - show separator if there are no posts at all (it will be shown after `placeholder`) <br/> `content`: '' - html content of placeholder (it has much priority then `el`) <br/> `el`: null - selector to element containing separator (inner html of this element will be shown like separator)|
+| SelectPagination | Pagination based on html select controls | `perPage`: 10 - default value for perPage select, will be used to determine how many items should be shown per page <br/> `selectedPage`: 1 - index of selected by default page of pagination <br/> `pageSelectSelector`: '[data-role="search-page"]' - css selector of page select element (it should not contain any options, plugin will fill it with options depending on items count), `perPageSelectSelector`: '[data-role="search-per-page"]' - css selector of per page select element (it should contain options with per page value variants)|
 
 ## Options
 
@@ -86,8 +87,6 @@ Please check the demo projects to get know how can options be used.
 | ----- | ----------- | --------- | --------- | --------- |
 | `elements.filter`  | CSS selector for all inputs used for filtering  | ✓ |` [data-role="search-filter"]` |
 | `elements.sort`  | CSS selector for all inputs used for sorting  | ✓ |  `[data-role="search-sort"]` |
-| `elements.page`  | CSS selector for all inputs used pagination page select | ✓ |  `[data-role="search-fpage"]` |
-| `elements.perPage`  | CSS selector for all inputs used for pagination items per page select  | ✓ |  `[data-role="search-perPage"]` |
 | `elements.submit`  | CSS selector for all buttons used for submit action  | ✓ |  `[data-role="search-"submit]` |
 | `elements.listUnProcessed`  | CSS selector for list container  | ✓ |  `jc-filter-list` |
 | `elements.list`  | CSS selector for list container after vue was applied  | ✓ |  ` [data-role="search-result"]`|

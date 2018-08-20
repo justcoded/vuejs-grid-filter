@@ -2,31 +2,36 @@ import ListFactory from './components/ListFactory';
 import * as transport from './api/transport';
 
 class Behaviour {
-  reload(options, appData, state = null) {
-    appData.loading = true;
-
+  reload(state = null) {
     if (!state) {
-      state = options.getControlsState();
+      state = this.options.getControlsState();
     }
 
-    options.beforeReloadItemsCb(state);
+    this.setState(state)
+  }
 
-    options.saveControlsState(state);
+  setState(state = null) {
+    this.options.beforeReloadItemsCb(state);
+
+    this.options.saveControlsState(state);
 
     this.lastRequestedState = state;
 
-    transport.loadData(
-      options.getRequestUrl(state),
-      appData,
-      options,
-      (items) => {
-        appData.items = items;
+    this.appData.loading = true;
 
-        options.vue.nextTick(() => {
-          options.afterItemsDrawCb(items);
+    transport.loadData(
+      this.options.getRequestUrl(state),
+      this.appData,
+      state,
+      this.options,
+      (items) => {
+        this.appData.items = items;
+
+        this.options.vue.nextTick(() => {
+          this.options.afterItemsDrawCb(items);
         });
 
-        appData.loading = false;
+        this.appData.loading = false;
       });
   }
 
@@ -36,6 +41,9 @@ class Behaviour {
       sort: {},
       pagination: {}
     };
+
+    this.appData = appData;
+    this.options = options;
 
     options.beforeInitCb(appData);
 
@@ -51,11 +59,11 @@ class Behaviour {
     }
 
     options.registerItemsUpdater((state) => {
-      this.reload(options, appData, state);
+      this.reload(state);
     }, () => this.lastRequestedState);
 
     if (options.initialLoad && !appData.items.length) {
-      this.reload(options, appData);
+      this.reload();
     }
   }
 }
@@ -80,4 +88,6 @@ export default (options) => {
       })
     }
   });
+
+  return behaviour;
 }
