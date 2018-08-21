@@ -10,13 +10,25 @@ const DEFAULT_OPTIONS = {
 export default (params = {}) => {
   const options = assign({}, DEFAULT_OPTIONS, params);
 
-  let isNeedForRefresh = false;
-
   return {
     getPaginationControlInputs() {
       return this.jquery(`${options.pageSelectSelector},${options.perPageSelectSelector}`);
     },
     drawControlsState(controlsState) {
+      this.drawPaginationControlsState(controlsState);
+    },
+    drawPaginationControlsState(controlsState) {
+      const pageSelect = this.jquery(options.pageSelectSelector);
+
+      // append temporary option in a case if pages doesn't rendered yet
+      if (!pageSelect.find(`option[value="${controlsState.pagination.page}"]`).length) {
+        pageSelect.append(
+          this.jquery('<option>')
+            .val(controlsState.pagination.page)
+            .html(controlsState.pagination.page)
+        );
+      }
+
       this.jquery(options.pageSelectSelector).val(controlsState.pagination.page);
       this.jquery(options.perPageSelectSelector).val(controlsState.pagination.perPage);
     },
@@ -28,40 +40,33 @@ export default (params = {}) => {
 
       return state;
     },
-    registerItemsUpdater: {
-      handler(update, getRequestedState) {
-        this._super(() => {
-          isNeedForRefresh = true;
-        }, getRequestedState);
+    registerItemsUpdater(update, getRequestedState) {
+      this.jquery(options.pageSelectSelector).change(() => update());
+      this.jquery(options.perPageSelectSelector).change((ev) => {
+        const state = getRequestedState();
 
-        this.jquery(options.pageSelectSelector).change(() => update());
-        this.jquery(options.perPageSelectSelector).change((ev) => {
-          const state = getRequestedState();
-
-          update({
-            ...state,
-            pagination: {
-              ...state.pagination,
-              page: 1,
-              perPage: this.jquery(ev.target).val(),
-            }
-          });
+        update({
+          ...state,
+          pagination: {
+            ...state.pagination,
+            page: 1,
+            perPage: this.jquery(ev.target).val(),
+          }
         });
-      },
-      before: true,
+      });
     },
-    beforeReloadItemsCb(state) {
-      if (isNeedForRefresh) { // we will reset pagination on any filter/sorting change
-        state.pagination.page = 1;
+    beforeReloadItemsCb(newState, prevState) {
+      const isFilterChanged = JSON.stringify([newState.sort, newState.filter]) !== JSON.stringify([prevState.sort, prevState.filter]);
 
-        isNeedForRefresh = false;
+      if (isFilterChanged) {
+        newState.pagination.page = 1;
       }
     },
     afterServerResponseCb(data, state) {
       const perPage = state.pagination.perPage;
 
       this.drawPaginationPages(Math.ceil(data.total / perPage));
-      this.drawControlsState(state);
+      this.drawPaginationControlsState(state);
     },
     drawPaginationPages(pages) {
       const pageSelect = this.jquery(options.pageSelectSelector);

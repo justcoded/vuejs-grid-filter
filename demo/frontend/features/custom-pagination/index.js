@@ -4,7 +4,6 @@ jQuery(function ($) {
       total: 0,
       current: 1,
       perPage: 5,
-      isNeedForRefresh: true,
     };
 
     var filter = new JustFilter({
@@ -70,20 +69,11 @@ jQuery(function ($) {
           pagination.current = state.pagination.page;
         }
       },
-      registerItemsUpdater: {
-        handler(update, getRequestedState) {
-          this._super((state) => {
-            pagination.isNeedForRefresh = true;
-          }, getRequestedState);
-        },
-        before: true,
-      },
-      beforeReloadItemsCb(state) {
-        if (pagination.isNeedForRefresh) { // we will reset pagination on any filter/sorting change
-          state.pagination.page = pagination.current = 1;
-          state.pagination.perPage = pagination.perPage;
+      beforeReloadItemsCb(newState, prevState) {
+        const isFilterChanged = JSON.stringify([newState.sort, newState.filter]) !== JSON.stringify([prevState.sort, prevState.filter]);
 
-          pagination.isNeedForRefresh = false;
+        if (isFilterChanged) {
+          newState.pagination.page = pagination.current = 1;
         }
       },
     });
