@@ -88,7 +88,6 @@ Please check the demo projects to get know how can options be used.
 | NAME  | DESCRIPTION | NEED TO BE PROVIDED (if different from default) | DEFAULT | COMMENT
 | ----- | ----------- | --------- | --------- | --------- |
 | `elements.filter`  | CSS selector for all inputs used for filtering  | ✓ |` [data-role="search-filter"]` |
-| `elements.sort`  | CSS selector for all inputs used for sorting  | ✓ |  `[data-role="search-sort"]` |
 | `elements.submit`  | CSS selector for all buttons used for submit action  | ✓ |  `[data-role="search-"submit]` |
 | `elements.listUnProcessed`  | CSS selector for list container  | ✓ |  `jc-filter-list` |
 | `elements.list`  | CSS selector for list container after vue was applied  | ✓ |  ` [data-role="search-result"]`|
