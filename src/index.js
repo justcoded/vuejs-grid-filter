@@ -165,11 +165,14 @@ JustFilter.defaults = {
     const filterState = this.elements.filter.reduce((controlsState, el) => {
       const input = this.jquery(el);
       const isCheckbox = input.is('input[type="checkbox"]');
+      const isRadio = input.is('input[type="radio"]');
       const name = input.prop('name');
       let value = null;
 
       if (isCheckbox) {
-        value = input.prop('checked') ? [controlsState[name], input.val()].filter((val) => val).join(',') : controlsState[name]
+        value = input.is(':checked') ? [controlsState[name], input.val()].filter((val) => val).join(',') : controlsState[name]
+      } else if (isRadio) {
+        value = input.is(':checked') ? input.val() : controlsState[name]
       } else {
         value = input.val();
       }
@@ -298,15 +301,19 @@ JustFilter.defaults = {
       + (search ? ('?' + search) : '');
   },
   applyControlValue: function (input, value) {
-    const isCheckbox = this.jquery(input).is('input[type="checkbox"]');
-    const isRadio = this.jquery(input).is('input[type="radio"]');
+    const $input = $(input);
+
+    const isCheckbox = $input.is('input[type="checkbox"]');
+    const isRadio = $input.is('input[type="radio"]');
 
     if (isCheckbox) {
       value = Array.isArray(value) ? value : [value];
     }
 
-    if (isRadio && input.val() === value) {
-      input.prop('checked', true).trigger('change');
+    if (isRadio) {
+      if ($input.val() === value) {
+        $input.prop('checked', true).trigger('change');
+      }
 
       return;
     }
