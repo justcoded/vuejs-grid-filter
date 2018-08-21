@@ -1,29 +1,4 @@
 jQuery(function ($) {
-  /**
-   * Some demo specific behaviour, it's not important for filter itself
-   */
-  function initUI() {
-    /**
-     * This will init sorting behaviour - hide/show sort dirt input, skip this if you will no need to implement this on you project
-     */
-    function initSortingUI() {
-      var sortingInput = $('[data-role="search-sort"]');
-      var sortingDirInput = $('[data-role="search-sort-dir"]');
-
-      sortingInput.on('change', function () {
-        var input = $(this);
-
-        if (input.find('option:selected').data('sortDirInput')) {
-          sortingDirInput.show();
-        } else {
-          sortingDirInput.hide();
-        }
-      });
-    }
-
-    initSortingUI();
-  }
-
   function initFilter() {
     var filter = new JustFilter({
       vue: Vue,
@@ -138,6 +113,7 @@ jQuery(function ($) {
       after: 6,
       el: '#featured-posts'
     }));
+    filter.use(JustFilter.Plugins.SelectSorting());
 
     filter.init();
 
@@ -146,6 +122,5 @@ jQuery(function ($) {
     });
   }
 
-  initUI();
   initFilter();
 });

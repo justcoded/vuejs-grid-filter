@@ -1,26 +1,4 @@
 jQuery(function ($) {
-  /**
-   * Some demo specific behaviour, it's not important for filter itself
-   */
-  function initUI() {
-    function initSortingUI() {
-      var sortingInput = $('[data-role="search-sort"]');
-      var sortingDirInput = $('[data-role="search-sort-dir"]');
-
-      sortingInput.on('change', function () {
-        var input = $(this);
-
-        if (input.find('option:selected').data('sortDirInput')) {
-          sortingDirInput.show();
-        } else {
-          sortingDirInput.hide();
-        }
-      });
-    }
-
-    initSortingUI();
-  }
-
   function initFilter() {
     var filter = new JustFilter({
       elements: {
@@ -65,6 +43,10 @@ jQuery(function ($) {
     });
 
     filter.use(JustFilter.Plugins.SelectPagination());
+    filter.use(JustFilter.Plugins.SelectSorting());
+    filter.use(JustFilter.Plugins.AutoLoad({
+        debounce: 500
+    }));
 
     filter.init();
 
@@ -73,6 +55,5 @@ jQuery(function ($) {
     });
   }
 
-  initUI();
   initFilter();
 });

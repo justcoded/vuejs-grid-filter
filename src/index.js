@@ -21,9 +21,6 @@ class JustFilter {
     };
 
     options.elements.filter = replaceSelectorWithElements(options.elements.filter);
-    options.elements.sort = replaceSelectorWithElements(options.elements.sort);
-    options.elements.page = replaceSelectorWithElements(options.elements.page);
-    options.elements.perPage = replaceSelectorWithElements(options.elements.perPage);
     options.elements.submit = replaceSelectorWithElements(options.elements.submit);
     options.elements.list = replaceSelectorWithElements(options.elements.list, true);
 
@@ -120,7 +117,6 @@ class JustFilter {
 JustFilter.defaults = {
   elements: {
     filter: '[data-role="search-filter"]',
-    sort: '[data-role="search-sort"]',
     listUnProcessed: 'jc-filter-list',
     list: '[data-role="search-result"]',
     submit: '[data-role="search-submit"]'
@@ -181,32 +177,9 @@ JustFilter.defaults = {
       return {...controlsState, [input.prop('name')]: value}
     }, {});
 
-    const sortState = this.elements.sort.reduce((controlsState, el) => {
-      const input = this.jquery(el);
-      if (input.is(':radio') && !input.is(':checked')) {
-        return controlsState;
-      }
-
-      const name = input.val().split(':')[0];
-      let sortDir = input.val().split(':')[1];
-
-      if (!sortDir) {
-        const selectedOption = input.is(':radio') ? input : input.find('option:selected');
-        const sortDirEl = this.jquery(selectedOption.data('sortDirInput'));
-
-        sortDir = sortDirEl.is(':radio') ? sortDirEl.filter(':checked').val() : sortDirEl.val();
-      }
-
-      if (name && sortDir) {
-        return {...controlsState, [name]: sortDir};
-      }
-
-      return controlsState;
-    }, {});
-
     return {
       filter: filterState,
-      sort: sortState,
+      sort: {},
       pagination: {},
     }
   },
@@ -358,71 +331,10 @@ JustFilter.defaults = {
       }
     };
 
-    // TODO it's better to move sorting and pagination out to plugins
-    const drawSortState = () => {
-      const state = controlsState.sort;
-
-      for (let sortName in state) {
-        const sortDir = state[sortName];
-
-        this.elements.sort.forEach((el) => {
-          const input = $(el);
-
-          const options = input.is(':radio') ? [input] : input.find('option').toArray();
-
-          options.some((el) => {
-            const option = $(el);
-            const optionSortName = option.val().split(':')[0];
-            let optionSortDir = option.val().split(':')[1];
-            let optionSortDirInput;
-
-            if (!optionSortDir) {
-              optionSortDirInput = this.jquery(option.data('sortDirInput'));
-
-              optionSortDir = optionSortDirInput.is(':radio')
-                  ? optionSortDirInput.toArray().map((el) => this.jquery(el).val())
-                  : optionSortDirInput.find('option').toArray().map((el) => this.jquery(el).val())
-            } else {
-              optionSortDir = [optionSortDir];
-            }
-
-            if (sortName === optionSortName && optionSortDir.indexOf(sortDir) !== -1) {
-              this.applyControlValue(input, option.val());
-
-              if (optionSortDirInput) {
-                if (optionSortDirInput.length > 1) {
-                  optionSortDirInput = optionSortDirInput.filter(`[value="${sortDir}"]`)[0]
-                }
-
-                this.applyControlValue(this.jquery(optionSortDirInput), sortDir);
-              }
-
-              return true;
-            }
-
-            return false;
-          });
-        });
-      }
-    };
-
     drawFilterState();
-    drawSortState();
   },
   getControlInputs: function () {
-    return this.elements.filter
-      .concat(this.elements.sort)
-      .concat(
-        this.jquery(this.elements.sort).find('option').toArray().reduce((sortDirInputs, sortOption) => {
-          const sortDirInput = this.jquery(sortOption.dataset.sortDirInput)[0];
-
-          if (sortDirInput) {
-            sortDirInputs.push(sortDirInput);
-          }
-
-          return sortDirInputs;
-        }, [])
-      );
+    return this.elements.filter;
   },
   parseResponse: function (data, status, xhr) {
     return data;
@@ -436,9 +348,9 @@ JustFilter.defaults = {
   afterItemsDrawCb: function (items) {
     // NOP
   },
-  beforeReloadItemsCb: function (state) {
+  beforeReloadItemsCb: function (newState, prevState) {
     // NOP
-  }
+  },
 };
 
 if (typeof window !== 'undefined') {

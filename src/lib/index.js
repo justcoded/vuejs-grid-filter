@@ -11,7 +11,7 @@ class Behaviour {
   }
 
   setState(state = null) {
-    this.options.beforeReloadItemsCb(state);
+    this.options.beforeReloadItemsCb(state, this.lastRequestedState);
 
     this.options.saveControlsState(state);
 

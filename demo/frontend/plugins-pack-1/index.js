@@ -1,32 +1,4 @@
 jQuery(function ($) {
-  /**
-   * Some demo specific behaviour, it's not important for filter itself
-   */
-  function initUI() {
-    function initCustomPlugins() {
-      $('.select2-select').select2();
-      $('.touch-spin').TouchSpin();
-      //$('.selectpicker').picker(); // because of it's doesn't handle input change events we need to init it when filter plugin has been drown itself
-    }
-    function initSortingUI() {
-      var sortingInput = $('[data-role="search-sort"]');
-      var sortingDirInputWrapper = $('[data-role="search-sort-dir-wrapper"]');
-
-      sortingInput.on('change', function () {
-        var input = $(this);
-
-        if (input.data('sortDirInput')) {
-          sortingDirInputWrapper.show();
-        } else {
-          sortingDirInputWrapper.hide();
-        }
-      });
-    }
-
-    initCustomPlugins();
-    initSortingUI();
-  }
-
   function initFilter() {
     var filter = new JustFilter({
       elements: {
@@ -75,11 +47,11 @@ jQuery(function ($) {
         }
       }
     }));
-
     filter.use(JustFilter.Plugins.InfinityScroll({
       perPage: 8,
       scrollOffset: 200
     }));
+    filter.use(JustFilter.Plugins.RadioSorting());
 
     filter.init();
 
@@ -88,6 +60,5 @@ jQuery(function ($) {
     });
   }
 
-  initUI();
   initFilter();
 });

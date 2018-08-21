@@ -8,3 +8,5 @@ export {default as InfinityScroll} from './InfinityScroll';
 export {default as WpRest} from './WpRest';
 export {default as Separator} from './Separator';
 export {default as SelectPagination} from './SelectPagination';
+export {default as SelectSorting} from './SelectSorting';
+export {default as RadioSorting} from './RadioSorting';
