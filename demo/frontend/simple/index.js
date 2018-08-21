@@ -44,9 +44,6 @@ jQuery(function ($) {
 
     filter.use(JustFilter.Plugins.SelectPagination());
     filter.use(JustFilter.Plugins.SelectSorting());
-    filter.use(JustFilter.Plugins.AutoLoad({
-        debounce: 500
-    }));
 
     filter.init();
 
