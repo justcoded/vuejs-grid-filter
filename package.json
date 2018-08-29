@@ -1,7 +1,7 @@
 {
   "name": "just-grid-filter",
   "description": "Advanced filtering and sorting",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "author": "Oleh Biriukov <jc_obirukov@justcoded.co>",
   "license": "MIT",
   "main": "dist/build.js",
