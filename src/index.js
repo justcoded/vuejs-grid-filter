@@ -152,7 +152,7 @@ JustFilter.defaults = {
       </div>
     `,
     wrapper: `
-        <list :class="{[options.loadingClass]: loading}" :items="items" :placeholder="options.noItemsPlaceholder"></list>
+        <list :class="loading && options.loadingClass" :items="items" :placeholder="options.noItemsPlaceholder"></list>
     `,
     placeholder: '<span class="empty-result">No items was found ...</span>'
   },
