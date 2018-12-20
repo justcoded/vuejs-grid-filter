@@ -217,8 +217,8 @@ JustFilter.defaults = {
       [
         toPairs(state.filter).map((f) => getUrlSearchPair(f, 'filter')).filter((f) => f).join('&'),
         toPairs(state.sort).map((f) => getUrlSearchPair(f, 'sort')).filter((s) => s).join('&'),
-        getUrlSearchPair(['p', state.pagination.page]),
-        getUrlSearchPair(['pp', state.pagination.perPage])
+        getUrlSearchPair(['page', state.pagination.page]),
+        getUrlSearchPair(['per_page', state.pagination.perPage])
       ].filter((p) => p).join('&');
   },
   requestData: function (url, cb) {
@@ -250,8 +250,8 @@ JustFilter.defaults = {
       filter: normalizeValues(query.filter) || {},
       sort: normalizeValues(query.sort) || {},
       pagination: {
-        page: parseInt(query['p']) || null,
-        perPage: parseInt(query['pp']) || null
+        page: parseInt(query['page']) || null,
+        perPage: parseInt(query['per_page']) || null
       }
     }
   },
@@ -275,11 +275,11 @@ JustFilter.defaults = {
         const paginationState = {};
 
         if (state.pagination.page) {
-          paginationState['p'] = state.pagination.page;
+          paginationState['page'] = state.pagination.page;
         }
 
         if (state.pagination.perPage) {
-          paginationState['pp'] = state.pagination.perPage;
+          paginationState['per_page'] = state.pagination.perPage;
         }
 
         return paginationState;
