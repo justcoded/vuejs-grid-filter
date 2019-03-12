@@ -217,7 +217,7 @@ JustFilter.defaults = {
       [
         toPairs(state.filter).map((f) => getUrlSearchPair(f, 'filter')).filter((f) => f).join('&'),
         toPairs(state.sort).map((f) => getUrlSearchPair(f, 'sort')).filter((s) => s).join('&'),
-        getUrlSearchPair(['page', state.pagination.page]),
+        getUrlSearchPair(['current_page', state.pagination.page]),
         getUrlSearchPair(['per_page', state.pagination.perPage])
       ].filter((p) => p).join('&');
   },
@@ -250,7 +250,7 @@ JustFilter.defaults = {
       filter: normalizeValues(query.filter) || {},
       sort: normalizeValues(query.sort) || {},
       pagination: {
-        page: parseInt(query['page']) || null,
+        page: parseInt(query['current_page']) || null,
         perPage: parseInt(query['per_page']) || null
       }
     }
@@ -275,7 +275,7 @@ JustFilter.defaults = {
         const paginationState = {};
 
         if (state.pagination.page) {
-          paginationState['page'] = state.pagination.page;
+          paginationState['current_page'] = state.pagination.page;
         }
 
         if (state.pagination.perPage) {
